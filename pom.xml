@@ -1,33 +1,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>net.kaikk.mc</groupId>
-  <artifactId>uuidprovider</artifactId>
-  <build>
-      <plugins>
-          <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <configuration>
-                  <source>1.7</source>
-                  <target>1.7</target>
-              </configuration>
-          </plugin>
-      </plugins>
-   </build>
-   <repositories>
-       <repository>
-           <id>bukkit-repo</id>
-           <url>http://repo.bukkit.org/content/groups/public/</url>
-       </repository>
-   </repositories>
-   <dependencies>
-       <dependency>
-           <groupId>org.bukkit</groupId>
-           <artifactId>bukkit</artifactId>
-           <version>1.6.4-R2.0</version>
-           <type>jar</type>
-           <scope>provided</scope>
-       </dependency>
-   </dependencies>
-   <version>1</version>
+  	<modelVersion>4.0.0</modelVersion>
+  	<groupId>net.kaikk.mc</groupId>
+  	<artifactId>uuidprovider</artifactId>
+  	<version>1.3.2</version>
+    <name>UUID Provider</name>
+	<description>KaiKikuchi's UUIDProvider Bukkit Plugin</description>
+	<url>https://github.com/KaiKikuchi/UUIDProvider</url>  
+  
+  	<build>
+		<plugins>
+	    	<plugin>
+	        	<groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-compiler-plugin</artifactId>
+	            <configuration>
+	            	<source>1.7</source>
+	            	<target>1.7</target>
+	            </configuration>
+	    	</plugin>
+		</plugins>
+	</build>
+	<repositories>
+	 	<repository>
+	    	<id>bukkit-repo</id>
+	        <url>http://repo.bukkit.org/content/groups/public/</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+	        <artifactId>bukkit</artifactId>
+	        <version>1.6.4-R2.0</version>
+	        <type>jar</type>
+		</dependency>
+	</dependencies>
 </project>

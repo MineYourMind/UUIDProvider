@@ -11,7 +11,7 @@ public class EventListener implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	void onAsyncPlayerPreLoginEvent(AsyncPlayerPreLoginEvent event) {
 		if (UUIDProvider.getUniqueId==null) {
-			UUID uuid = UUIDProvider.retrieveUUID(event.getName());
+			UUID uuid = UUIDProvider.retrieve(event.getName());
 			if (uuid==null) {
 				event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Invalid UUID or Mojang's servers down. Try later.");
 				UUIDProvider.instance.getLogger().warning("UUIDProvider couldn't retrieve UUID for "+event.getName());

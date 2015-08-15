@@ -2,7 +2,7 @@ package net.kaikk.mc.uuidprovider;
 
 import java.util.UUID;
 
-class PlayerData {
+public class PlayerData {
 	UUID uuid;
 	String name;
 	int lastCheck;
