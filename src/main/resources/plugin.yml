@@ -2,7 +2,7 @@ name: UUIDProvider
 main: net.kaikk.mc.uuidprovider.UUIDProvider
 version: 1.3.2
 author: KaiNoMood
-authors: MrWisski
+authors: [MrWisski]
 description: Provides UUID resolution services to other plugins, as well as a fast cache and mySQL Storage of data.
 website: https://github.com/KaiKikuchi/UUIDProvider
 load: STARTUP
