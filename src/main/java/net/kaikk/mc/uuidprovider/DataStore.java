@@ -35,7 +35,10 @@ class DataStore {
 			this.instance.getLogger().severe("Unable to connect to database.  Check your config file settings. Details: \n"+e.getMessage());
 			throw e;
 		}
-
+/**
+ *This block seems to wreck the database cluster.
+ *Please ensure that this database table exists :(
+ *
 		try {
 			Statement statement = db.createStatement();
 
@@ -51,7 +54,7 @@ class DataStore {
 			
 			throw e;
 		}
-		
+**/		
 		try {
 			this.dbCheck();
 			
