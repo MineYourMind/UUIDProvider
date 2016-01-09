@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
+
 class DataStore {
 	private UUIDProvider instance;
 	private String dbUrl;
@@ -35,10 +38,7 @@ class DataStore {
 			this.instance.getLogger().severe("Unable to connect to database.  Check your config file settings. Details: \n"+e.getMessage());
 			throw e;
 		}
-/**
- *This block seems to wreck the database cluster.
- *Please ensure that this database table exists :(
- *
+/*	
 		try {
 			Statement statement = db.createStatement();
 
@@ -54,7 +54,7 @@ class DataStore {
 			
 			throw e;
 		}
-**/		
+*/
 		try {
 			this.dbCheck();
 			
@@ -79,7 +79,8 @@ class DataStore {
 	}
 	
 	synchronized void dbCheck() throws SQLException {
-		if(this.db == null || this.db.isClosed()) {
+		//@MrWisski - added .isValid check.
+		if(this.db == null || this.db.isClosed() || !this.db.isValid(2)) {
 			Properties connectionProps = new Properties();
 			connectionProps.put("user", this.username);
 			connectionProps.put("password", this.password);
@@ -99,12 +100,28 @@ class DataStore {
 		}
 	}
 	
-	synchronized void addData(PlayerData playerData) {
+	synchronized void addData(final PlayerData playerData) {
 		try {
 			this.dbCheck();
-			
-			Statement statement = this.db.createStatement();
-			statement.executeUpdate("INSERT INTO uuidcache VALUES("+UUIDtoHexString(playerData.uuid)+", \""+playerData.name+"\", "+playerData.lastCheck+") ON DUPLICATE KEY UPDATE name=\""+playerData.name+"\", lastcheck="+playerData.lastCheck);
+			//@MrWisski - insert query now off-loaded to a different thread.
+			BukkitRunnable r = new BukkitRunnable() {
+				PlayerData p = playerData;
+				@Override
+				public void run() {
+					Statement statement;
+					try {
+						statement = db.createStatement();
+						statement.executeUpdate("INSERT INTO uuidcache VALUES("+UUIDtoHexString(p.uuid)+", \""+p.name+"\", "+p.lastCheck+") ON DUPLICATE KEY UPDATE name=\""+p.name+"\", lastcheck="+p.lastCheck);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+			};
+
+			Bukkit.getScheduler().runTaskAsynchronously(UUIDProvider.instance, r);
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
