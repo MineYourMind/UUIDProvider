@@ -102,7 +102,34 @@ public class UUIDProvider extends JavaPlugin {
 				sender.sendMessage("§2[UUID§aProvider§2] Usage: /uuidprovider (get|reload|clearcache|scrape)");
 				return false;
 			}
+			if(args[0].equalsIgnoreCase("cacheadd")){
+				if(!sender.isOp()){
+					sender.sendMessage("§2[UUID§aProvider§2] You must be an Operator to use this command!");
+					return false;
+				}
+				if (args.length == 1) {
+					sender.sendMessage("§2[UUID§aProvider§2] Usage: /uuidprovider cacheadd (name) (UUID)");
+					return false;
+				}
 
+				if (args.length != 3) {
+					sender.sendMessage("§2[UUID§aProvider§2] You must include a Name and a UUID as arguments to this command!");
+					return false;
+				}				
+				
+				UUID uuid = UUID.fromString(args[2]);
+				
+				if(uuid == null){
+					sender.sendMessage("§2[UUID§aProvider§2] Could not convert the supplied UUID string to a java UUID!");
+					return false;
+				}
+				
+				PlayerData pd = new PlayerData(uuid, args[1]);
+				ds.addData(pd);
+				
+				sender.sendMessage("§2[UUID§aProvider§2] Added Player '"+pd.name+"' to the UUID Cache with UUID '"+pd.uuid.toString()+"'");
+				
+			}
 			if (args[0].equalsIgnoreCase("scrape")) {
 				if (getServer().getConsoleSender() == sender) {
 					if (args.length == 1) {
@@ -272,6 +299,7 @@ public class UUIDProvider extends JavaPlugin {
 			}
 
 			if (args[0].equalsIgnoreCase("clearcache")) {
+				
 				if (getServer().getConsoleSender() == sender) {
 					String conf = this.generateRandomNumbers(4);
 					// put them into the confirm tracking
@@ -424,7 +452,8 @@ public class UUIDProvider extends JavaPlugin {
 			return name;
 		} catch (Exception e) {
 			instance.getLogger().severe(e.getMessage());
-			e.printStackTrace();
+			//@MrWisski : Removed due to HTTP 429 (Too many requests) error.
+			//e.printStackTrace();
 			return null;
 		}
 	}
@@ -452,7 +481,8 @@ public class UUIDProvider extends JavaPlugin {
 			return uuid;
 		} catch (Exception e) {
 			instance.getLogger().severe(e.getMessage());
-			e.printStackTrace();
+			//@MrWisski : Removed due to HTTP 429 (Too many requests) error.
+			//e.printStackTrace();
 			return null;
 		}
 	}
