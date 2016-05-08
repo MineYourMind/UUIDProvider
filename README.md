@@ -29,14 +29,44 @@ Add this plugin in your project's build path - Don't forget to also install this
 String denotes a Minecraft Username.
 
 - UUID/Username translation methods:
-    - (UUID) UUIDProvider.get(OfflinePlayer) - OfflinePlayer -> UUID
-    - (OfflinePlayer) UUIDProvider.get(UUID) - UUID -> OfflinePlayer
-    - (UUID) UUIDProvider.retrieve(String) - Name -> UUID, no 1.7.5+ UUID resolution.
-    - (String) UUIDProvider.retrieve(UUID) - UUID -> Name, no 1.7.5+ UUID resolution.
-    - (UUID) UUIDProvider.uuidFetcher(String) - Name -> UUID, Skips cache, pulls from Mojang, caches result.
-    - (String) UUIDProvider.nameFetcher(UUID) - UUID -> Name, Skips cache, pulls from Mojang, caches result.
-    - (UUID) UUIDProvider.getCachedPlayer(String) - Name -> UUID, Skips Mojang, pulls from cache.
-    - (String) UUIDProvider.getCachedPlayer(UUID) - UUID -> Name, Skips Mojang, pulls from cache.
+    - **(UUID) UUIDProvider.get(OfflinePlayer)**
+        1. Bukkit API (1.7.5+ only)
+        2. retrieve(name)
+            1. getCachedPlayer(String)
+                1. plugin cache
+                2. database (MySQL)
+            2. uuidFetcher(String)
+                1. mojang query
+    - **(OfflinePlayer) UUIDProvider.get(UUID)**
+        1. Bukkit API (1.7.5+ only)
+        2. retrieve(UUID)
+            1. getCachedPlayer(UUID)
+                1. plugin cache
+                2. database (MySQL)
+            2. nameFetcher(UUID)
+                1. mojang query
+    - **(UUID) UUIDProvider.retrieve(String)**
+        1. getCachedPlayer()
+            1. plugin cache
+            2. database (MySQL)
+        2. uuidFetcher()
+            1. mojang query
+    - **(String) UUIDProvider.retrieve(UUID)**
+        1. getCachedPlayer()
+            1. plugin cache
+            2. database (MySQL)
+        2. nameFetcher()
+            1. mojang query
+    - **(UUID) UUIDProvider.getCachedPlayer(String)**
+        1. plugin cache
+        2. database (MySQL)
+    - **(String) UUIDProvider.getCachedPlayer(UUID)**
+        1. plugin cache
+        2. database (MySQL)
+    - **(UUID) UUIDProvider.uuidFetcher(String)**
+        1. mojang query
+    - **(String) UUIDProvider.nameFetcher(UUID)**
+        1. mojang query
 - Cache status methods:
     - (Boolean) UUIDProvider.isCached(UUID)
     - (Boolean) UUIDProvider.isCached(String)
